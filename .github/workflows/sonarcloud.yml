@@ -21,7 +21,14 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f package.json ]; then
+            npm install
+          else
+            echo "No package.json found. Skipping dependencies install."
+          fi
 
       - name: SonarCloud Scan (no properties file)
         uses: SonarSource/sonarcloud-github-action@v2
