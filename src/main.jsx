@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import Widget from '@hexlet/chatbot-v2'
-import steps from '@hexlet/chatbot-v2/example-steps'
+import steps from './steps.js'
 import '@hexlet/chatbot-v2/styles'
 
 const rootEl = document.getElementById('root')
