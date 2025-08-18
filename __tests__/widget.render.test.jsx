@@ -1,4 +1,5 @@
 import './helpers/setup-tests.js'
+import { test, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Widget from '@hexlet/chatbot-v2'
@@ -16,5 +17,3 @@ test('виджет рендерится без ошибок', async () => {
   const firstMsg = steps[0].messages[0]
   expect(await screen.findByText(iRe(firstMsg))).toBeInTheDocument()
 })
-
- 

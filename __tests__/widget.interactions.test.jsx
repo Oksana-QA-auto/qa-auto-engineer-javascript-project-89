@@ -1,8 +1,8 @@
 import './helpers/setup-tests.js'
+import { describe, test, expect, vi } from 'vitest'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
 import { iRe } from './helpers/test-utils.js'
 import ChatWidgetPage from './pages/ChatWidgetPage.js'
-import { vi } from 'vitest'
 import { within } from '@testing-library/react'
 
 describe('Widget interactions', () => {
@@ -33,9 +33,7 @@ describe('Widget interactions', () => {
   })
 
   test('при появлении нового сообщения вызывается scrollIntoView', async () => {
-    const spy = vi
-      .spyOn(Element.prototype, 'scrollIntoView')
-      .mockImplementation(() => {})
+    const spy = vi.spyOn(Element.prototype, 'scrollIntoView').mockImplementation(() => {})
 
     const page = new ChatWidgetPage(fixtureSteps)
     await page.open()
@@ -57,6 +55,3 @@ describe('Widget interactions', () => {
     expect(page.openButton).toHaveFocus()
   })
 })
-
-
-

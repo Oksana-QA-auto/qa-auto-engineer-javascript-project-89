@@ -1,4 +1,5 @@
 import './helpers/setup-tests.js'
+import { describe, test, expect } from 'vitest'
 import { within } from '@testing-library/react'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
 
@@ -76,5 +77,3 @@ describe('Widget edge cases', () => {
     expect(await within(page.dialog).findByText(iRe(firstMessage))).toBeInTheDocument()
   })
 })
-
-

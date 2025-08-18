@@ -11,7 +11,7 @@ import '@testing-library/jest-dom/vitest'
 import { vi } from 'vitest'
 
 vi.mock('@hexlet/chatbot-v2/dist/init.css', () => ({}), { virtual: true })
-vi.mock('@hexlet/chatbot-v2/styles',      () => ({}), { virtual: true })
+vi.mock('@hexlet/chatbot-v2/styles', () => ({}), { virtual: true })
 
 if (!('scrollIntoView' in Element.prototype)) {
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
@@ -28,3 +28,4 @@ if (typeof window.scrollTo !== 'function') {
     configurable: true,
   })
 }
+

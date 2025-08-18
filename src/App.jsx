@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
 import steps from './steps.js'
 import '@hexlet/chatbot-v2/styles'
@@ -24,7 +24,7 @@ const App = () => {
     setSubmittingState('fillingForm')
   }
 
-  const handleSubmitForm = (event) => {
+  const handleSubmitForm = event => {
     event.preventDefault()
     setSubmittingState('submitted')
   }
@@ -38,7 +38,7 @@ const App = () => {
     acceptRules: 'Принять правила',
   }
 
-  const renderRow = (key) => (
+  const renderRow = key => (
     <tr key={key}>
       <td>{enToRus[key]}</td>
       <td>{form[key].toString()}</td>
@@ -162,4 +162,4 @@ const App = () => {
 }
 
 export default App
- 
+
