@@ -12,4 +12,3 @@ const useFixture = raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on
 console.log('[steps] useFixture =', useFixture, '(raw:', raw, ')')
 
 export default useFixture ? fixtureSteps : exampleSteps
-

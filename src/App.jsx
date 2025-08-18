@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Widget from '@hexlet/chatbot-v2';
-import steps from './steps.js';
-import '@hexlet/chatbot-v2/styles';
+import React, { useState } from 'react'
+import Widget from '@hexlet/chatbot-v2'
+import steps from './steps.js'
+import '@hexlet/chatbot-v2/styles'
 
 const App = () => {
   const [form, setForm] = useState({
@@ -11,23 +11,23 @@ const App = () => {
     country: '',
     address: '',
     acceptRules: false,
-  });
+  })
 
-  const [submittingState, setSubmittingState] = useState('fillingForm');
+  const [submittingState, setSubmittingState] = useState('fillingForm')
 
   const handleChangeField = ({ target }) => {
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    setForm({ ...form, [target.name]: value });
-  };
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    setForm({ ...form, [target.name]: value })
+  }
 
   const handleBackToForm = () => {
-    setSubmittingState('fillingForm');
-  };
+    setSubmittingState('fillingForm')
+  }
 
   const handleSubmitForm = (event) => {
-    event.preventDefault();
-    setSubmittingState('submitted');
-  };
+    event.preventDefault()
+    setSubmittingState('submitted')
+  }
 
   const enToRus = {
     email: 'Email',
@@ -36,17 +36,17 @@ const App = () => {
     country: 'Страна',
     address: 'Адрес',
     acceptRules: 'Принять правила',
-  };
+  }
 
   const renderRow = (key) => (
     <tr key={key}>
       <td>{enToRus[key]}</td>
       <td>{form[key].toString()}</td>
     </tr>
-  );
+  )
 
   const renderResult = () => {
-    const keys = Object.keys(form).sort();
+    const keys = Object.keys(form).sort()
     return (
       <div className="m-3">
         <button type="button" className="btn btn-primary" onClick={handleBackToForm}>
@@ -57,8 +57,8 @@ const App = () => {
           <tbody>{keys.map(renderRow)}</tbody>
         </table>
       </div>
-    );
-  };
+    )
+  }
 
   const renderForm = () => (
     <form className="m-3" onSubmit={handleSubmitForm} name="myForm">
@@ -151,15 +151,15 @@ const App = () => {
 
       <button type="submit" className="btn btn-primary">Зарегистрироваться</button>
     </form>
-  );
+  )
 
   return (
     <>
       {submittingState === 'fillingForm' ? renderForm() : renderResult()}
       {Widget(steps)}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
  

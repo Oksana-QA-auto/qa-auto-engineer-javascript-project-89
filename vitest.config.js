@@ -1,9 +1,9 @@
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const r = (p) => path.resolve(path.dirname(fileURLToPath(import.meta.url)), p);
+const r = (p) => path.resolve(path.dirname(fileURLToPath(import.meta.url)), p)
 
 export default defineConfig({
   plugins: [react()],
@@ -28,7 +28,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.js'],
     globals: true,
   },
-});
+})
 
 
 

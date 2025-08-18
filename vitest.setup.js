@@ -7,18 +7,18 @@
  * Добавлен минимальный полифилл-заглушка (no-op), чтобы сохранить API
  * и не тестировать сам скролл в юнит-тестах.
  **/
-import '@testing-library/jest-dom/vitest';
-import { vi } from 'vitest';
+import '@testing-library/jest-dom/vitest'
+import { vi } from 'vitest'
 
-vi.mock('@hexlet/chatbot-v2/dist/init.css', () => ({}), { virtual: true });
-vi.mock('@hexlet/chatbot-v2/styles',      () => ({}), { virtual: true });
+vi.mock('@hexlet/chatbot-v2/dist/init.css', () => ({}), { virtual: true })
+vi.mock('@hexlet/chatbot-v2/styles',      () => ({}), { virtual: true })
 
 if (!('scrollIntoView' in Element.prototype)) {
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
     value: function scrollIntoView() {},
     writable: true,
     configurable: true,
-  });
+  })
 }
 
 if (typeof window.scrollTo !== 'function') {
@@ -26,5 +26,5 @@ if (typeof window.scrollTo !== 'function') {
     value: () => {},
     writable: true,
     configurable: true,
-  });
+  })
 }
