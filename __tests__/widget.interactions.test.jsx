@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/vitest';
+import './helpers/setup-tests.js';
 import fixtureSteps from '../__fixtures__/basic-steps.js';
 import { iRe } from './helpers/test-utils.js';
 import ChatWidgetPage from './pages/ChatWidgetPage.js';

@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/vitest';
+import './helpers/setup-tests.js';
 import { within } from '@testing-library/react';
 import fixtureSteps from '../__fixtures__/basic-steps.js';
 

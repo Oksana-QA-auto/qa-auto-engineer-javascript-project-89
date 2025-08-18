@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/vitest';
+import './helpers/setup-tests.js';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Widget from '@hexlet/chatbot-v2';
