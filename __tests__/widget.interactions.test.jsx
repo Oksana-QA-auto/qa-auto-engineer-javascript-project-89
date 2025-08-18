@@ -1,62 +1,35 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
-
-import Widget from '@hexlet/chatbot-v2';
+import '@testing-library/jest-dom/vitest';
 import fixtureSteps from '../__fixtures__/basic-steps.js';
-
-const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-async function openWidget() {
-  const user = userEvent.setup();
-  const openButton = await screen.findByRole('button', { name: /открыть чат/i });
-  await user.click(openButton);
-  const dialog = await screen.findByRole('dialog');
-  return { user, dialog };
-}
-
-function getNextStepFromFirstButton() {
-  const nextId = fixtureSteps[0].buttons[0].nextStepId;
-  return fixtureSteps.find((step) => step.id === nextId);
-}
+import { iRe } from './helpers/test-utils.js';
+import ChatWidgetPage from './pages/ChatWidgetPage.js';
+import { vi } from 'vitest';
+import { within } from '@testing-library/react';
 
 describe('Widget interactions', () => {
   test('виджет открывается и показывает приветствие и первую кнопку', async () => {
-    render(Widget(fixtureSteps));
-
-    const { dialog } = await openWidget();
+    const page = new ChatWidgetPage(fixtureSteps);
+    await page.open();
 
     const firstMessage = fixtureSteps[0].messages[0];
-    expect(
-      await within(dialog).findByText(new RegExp(escapeRegExp(firstMessage), 'i')),
-    ).toBeInTheDocument();
-
     const firstButtonText = fixtureSteps[0].buttons[0].text;
-    expect(
-      await within(dialog).findByRole('button', {
-        name: new RegExp(escapeRegExp(firstButtonText), 'i'),
-      }),
-    ).toBeInTheDocument();
+
+    expect(await within(page.dialog).findByText(iRe(firstMessage))).toBeInTheDocument();
+    expect(await within(page.dialog).findByRole('button', { name: iRe(firstButtonText) }))
+      .toBeInTheDocument();
   });
 
   test('переход на следующий шаг после клика по первой кнопке', async () => {
-    render(Widget(fixtureSteps));
-
-    const { user, dialog } = await openWidget();
+    const page = new ChatWidgetPage(fixtureSteps);
+    await page.open();
 
     const firstButtonText = fixtureSteps[0].buttons[0].text;
-    await user.click(
-      await within(dialog).findByRole('button', {
-        name: new RegExp(escapeRegExp(firstButtonText), 'i'),
-      }),
-    );
+    await page.clickButtonByText(firstButtonText);
 
-    const nextStep = getNextStepFromFirstButton();
+    const nextId = fixtureSteps[0].buttons[0].nextStepId;
+    const nextStep = fixtureSteps.find((s) => s.id === nextId);
     const nextMessage = nextStep.messages[0];
 
-    expect(
-      await within(dialog).findByText(new RegExp(escapeRegExp(nextMessage), 'i')),
-    ).toBeInTheDocument();
+    expect(await within(page.dialog).findByText(iRe(nextMessage))).toBeInTheDocument();
   });
 
   test('при появлении нового сообщения вызывается scrollIntoView', async () => {
@@ -64,35 +37,24 @@ describe('Widget interactions', () => {
       .spyOn(Element.prototype, 'scrollIntoView')
       .mockImplementation(() => {});
 
-    render(Widget(fixtureSteps));
-
-    const { user, dialog } = await openWidget();
+    const page = new ChatWidgetPage(fixtureSteps);
+    await page.open();
 
     const firstButtonText = fixtureSteps[0].buttons[0].text;
-    await user.click(
-      await within(dialog).findByRole('button', {
-        name: new RegExp(escapeRegExp(firstButtonText), 'i'),
-      }),
-    );
+    await page.clickButtonByText(firstButtonText);
 
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });
 
   test('чат закрывается и фокус возвращается на кнопку "Открыть чат"', async () => {
-    render(Widget(fixtureSteps));
+    const page = new ChatWidgetPage(fixtureSteps);
+    await page.open();
 
-    const { user } = await openWidget();
-    const dialog = await screen.findByRole('dialog');
+    await page.close();
 
-    const closeButton =
-      within(dialog).queryByRole('button', { name: /закрыть/i }) ??
-      within(dialog).getByRole('button', { name: /x|close/i });
-
-    await user.click(closeButton);
-
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /открыть чат/i })).toHaveFocus();
+    expect(page.queryDialog()).not.toBeInTheDocument();
+    expect(page.openButton).toHaveFocus();
   });
 });
 
