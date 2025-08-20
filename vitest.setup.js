@@ -28,4 +28,3 @@ if (typeof window.scrollTo !== 'function') {
     configurable: true,
   })
 }
-

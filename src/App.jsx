@@ -24,7 +24,7 @@ const App = () => {
     setSubmittingState('fillingForm')
   }
 
-  const handleSubmitForm = event => {
+  const handleSubmitForm = (event) => {
     event.preventDefault()
     setSubmittingState('submitted')
   }
