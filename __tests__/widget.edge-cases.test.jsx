@@ -4,7 +4,7 @@ import { within } from '@testing-library/react'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
 
 import ChatWidgetPage from './pages/ChatWidgetPage.js'
-import { deepClone, assertArray, iRe } from './helpers/test-utils.js'
+import { deepClone, assertArray, toRegex } from './helpers/test-utils.js'
 
 describe('Widget edge cases', () => {
   test('handles missing nextStepId gracefully (no crash, content stays the same)', async () => {
@@ -20,7 +20,7 @@ describe('Widget edge cases', () => {
     const firstButtonText = steps[0].buttons[0].text
 
     await page.clickButtonByText(firstButtonText)
-    expect(await within(page.dialog).findByText(iRe(firstMessage))).toBeInTheDocument()
+    expect(await within(page.dialog).findByText(toRegex(firstMessage))).toBeInTheDocument()
   })
 
   test('renders step without buttons (only messages and close control are present)', async () => {
@@ -55,7 +55,7 @@ describe('Widget edge cases', () => {
     const page = new ChatWidgetPage(steps)
     await page.open()
 
-    expect(await within(page.dialog).findByText(iRe(htmlLike))).toBeInTheDocument()
+    expect(await within(page.dialog).findByText(toRegex(htmlLike))).toBeInTheDocument()
     expect(within(page.dialog).queryByText((_, node) => node?.tagName === 'B')).toBeNull()
   })
 
@@ -74,6 +74,6 @@ describe('Widget edge cases', () => {
     await page.close()
     await page.reopen()
 
-    expect(await within(page.dialog).findByText(iRe(firstMessage))).toBeInTheDocument()
+    expect(await within(page.dialog).findByText(toRegex(firstMessage))).toBeInTheDocument()
   })
 })

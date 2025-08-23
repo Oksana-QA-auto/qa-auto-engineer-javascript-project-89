@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Widget from '@hexlet/chatbot-v2'
-import { iRe } from '../helpers/test-utils.js'
+import { toRegex } from '../helpers/test-utils.js'
 
 export default class ChatWidgetPage {
   constructor(steps) {
@@ -42,11 +42,11 @@ export default class ChatWidgetPage {
   }
 
   async findTextInDialog(text) {
-    return within(this.dialog).findByText(iRe(text))
+    return within(this.dialog).findByText(toRegex(text))
   }
 
   async clickButtonByText(text) {
-    const btn = await within(this.dialog).findByRole('button', { name: iRe(text) })
+    const btn = await within(this.dialog).findByRole('button', { name: toRegex(text) })
     await this.user.click(btn)
   }
 

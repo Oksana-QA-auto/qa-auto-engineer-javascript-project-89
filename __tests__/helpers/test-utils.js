@@ -14,4 +14,4 @@ export const assertArray = (value, label = 'value') => {
   }
 }
 
-export const iRe = text => new RegExp(escapeForRegExp(text), 'i')
+export const toRegex = text => new RegExp(escapeForRegExp(text), 'i')

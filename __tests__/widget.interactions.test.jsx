@@ -1,7 +1,7 @@
 import './helpers/setup-tests.js'
 import { describe, test, expect, vi } from 'vitest'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
-import { iRe } from './helpers/test-utils.js'
+import { toRegex } from './helpers/test-utils.js'
 import ChatWidgetPage from './pages/ChatWidgetPage.js'
 import { within } from '@testing-library/react'
 
@@ -13,8 +13,8 @@ describe('Widget interactions', () => {
     const firstMessage = fixtureSteps[0].messages[0]
     const firstButtonText = fixtureSteps[0].buttons[0].text
 
-    expect(await within(page.dialog).findByText(iRe(firstMessage))).toBeInTheDocument()
-    expect(await within(page.dialog).findByRole('button', { name: iRe(firstButtonText) }))
+    expect(await within(page.dialog).findByText(toRegex(firstMessage))).toBeInTheDocument()
+    expect(await within(page.dialog).findByRole('button', { name: toRegex(firstButtonText) }))
       .toBeInTheDocument()
   })
 
@@ -29,7 +29,7 @@ describe('Widget interactions', () => {
     const nextStep = fixtureSteps.find(s => s.id === nextId)
     const nextMessage = nextStep.messages[0]
 
-    expect(await within(page.dialog).findByText(iRe(nextMessage))).toBeInTheDocument()
+    expect(await within(page.dialog).findByText(toRegex(nextMessage))).toBeInTheDocument()
   })
 
   test('при появлении нового сообщения вызывается scrollIntoView', async () => {

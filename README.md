@@ -20,7 +20,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 - **Стек:** Vite, React, Vitest, @testing-library/*, ESLint.
 - **Page Object:** `__tests__/pages/ChatWidgetPage.js` — сценарные операции с чатом.
-- **Утилиты для тестов:** `__tests__/helpers/test-utils.js` (deepClone, assertArray, `iRe()`).
+- **Утилиты для тестов:** `__tests__/helpers/test-utils.js` (deepClone, assertArray, `toRegex()`).
 - **Фикстуры шагов:** `__tests__/__fixtures__/basic-steps.js`.
 - **Переключение демо/фикстур:** в `src/steps.js` через переменную `VITE_USE_FIXTURE`.
 
