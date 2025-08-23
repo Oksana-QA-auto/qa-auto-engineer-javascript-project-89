@@ -19,10 +19,9 @@ export default class ChatWidgetPage {
   }
 
   async close() {
-    const closeBtn = (
-      within(this.dialog).queryByRole('button', { name: /закрыть/i })
-      ?? within(this.dialog).getByRole('button', { name: /x|close/i })
-    )
+    const closeBtn =
+      within(this.dialog).queryByRole('button', { name: /закрыть/i }) ??
+      within(this.dialog).getByRole('button', { name: /x|close/i })
     await this.user.click(closeBtn)
   }
 
@@ -46,7 +45,9 @@ export default class ChatWidgetPage {
   }
 
   async clickButtonByText(text) {
-    const btn = await within(this.dialog).findByRole('button', { name: toRegex(text) })
+    const btn = await within(this.dialog).findByRole('button', {
+      name: toRegex(text),
+    })
     await this.user.click(btn)
   }
 
@@ -56,8 +57,8 @@ export default class ChatWidgetPage {
 
   getCloseButton() {
     return (
-      within(this.dialog).queryByRole('button', { name: /закрыть/i })
-      ?? within(this.dialog).getByRole('button', { name: /x|close/i })
+      within(this.dialog).queryByRole('button', { name: /закрыть/i }) ??
+      within(this.dialog).getByRole('button', { name: /x|close/i })
     )
   }
 }
