@@ -1,7 +1,7 @@
 // Общие утилиты для тестов
-export const deepClone = (value) => JSON.parse(JSON.stringify(value))
+export const deepClone = value => JSON.parse(JSON.stringify(value))
 
-const escapeForRegExp = (text) =>
+const escapeForRegExp = text =>
   text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 export const assertArray = (value, label = 'value') => {
@@ -14,5 +14,4 @@ export const assertArray = (value, label = 'value') => {
   }
 }
 
-export const toRegex = (text) => new RegExp(escapeForRegExp(text), 'i')
-
+export const toRegex = text => new RegExp(escapeForRegExp(text), 'i')
