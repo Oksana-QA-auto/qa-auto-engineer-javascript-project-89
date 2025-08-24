@@ -1,4 +1,3 @@
-import './helpers/setup-tests.js'
 import { describe, test, expect, vi } from 'vitest'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
 import { toRegex } from './helpers/test-utils.js'
