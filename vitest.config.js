@@ -22,7 +22,10 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    setupFiles: [resolveFromConfigDir('vitest.setup.js')],
+    setupFiles: [
+      '@testing-library/jest-dom/vitest',
+      resolveFromConfigDir('vitest.setup.js'),
+    ],
     globals: true,
   },
 })
