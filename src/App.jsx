@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
 import steps from './steps.js'
-import '@hexlet/chatbot-v2/styles'
+import '@hexlet/chatbot-v2/dist/init.css'
 
 const App = () => {
   const [form, setForm] = useState({

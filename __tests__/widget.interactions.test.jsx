@@ -1,12 +1,12 @@
 import { describe, test, expect, vi } from 'vitest'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
 import { toRegex } from './helpers/test-utils.js'
-import ChatWidgetPage from './pages/ChatWidgetPage.js'
+import AppPage from './pages/AppPage.jsx'
 import { within } from '@testing-library/react'
 
 describe('Widget interactions', () => {
   test('виджет открывается и показывает приветствие и первую кнопку', async () => {
-    const page = new ChatWidgetPage(fixtureSteps)
+    const page = new AppPage(fixtureSteps)
     await page.open()
 
     const firstMessage = fixtureSteps[0].messages[0]
@@ -18,7 +18,7 @@ describe('Widget interactions', () => {
   })
 
   test('переход на следующий шаг после клика по первой кнопке', async () => {
-    const page = new ChatWidgetPage(fixtureSteps)
+    const page = new AppPage(fixtureSteps)
     await page.open()
 
     const firstButtonText = fixtureSteps[0].buttons[0].text
@@ -28,13 +28,13 @@ describe('Widget interactions', () => {
     const nextStep = fixtureSteps.find(s => s.id === nextId)
     const nextMessage = nextStep.messages[0]
 
-    expect(await within(page.dialog).findByText(toRegex(nextMessage))).toBeInTheDocument()
+    expect(await page.findTextInDialog(nextMessage)).toBeInTheDocument()
   })
 
   test('при появлении нового сообщения вызывается scrollIntoView', async () => {
     const spy = vi.spyOn(Element.prototype, 'scrollIntoView').mockImplementation(() => {})
 
-    const page = new ChatWidgetPage(fixtureSteps)
+    const page = new AppPage(fixtureSteps)
     await page.open()
 
     const firstButtonText = fixtureSteps[0].buttons[0].text
@@ -45,7 +45,7 @@ describe('Widget interactions', () => {
   })
 
   test('чат закрывается и фокус возвращается на кнопку "Открыть чат"', async () => {
-    const page = new ChatWidgetPage(fixtureSteps)
+    const page = new AppPage(fixtureSteps)
     await page.open()
 
     await page.close()

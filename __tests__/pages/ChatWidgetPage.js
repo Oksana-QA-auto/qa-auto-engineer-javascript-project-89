@@ -41,8 +41,22 @@ export default class ChatWidgetPage {
     return document.body.querySelector('[role="dialog"]')
   }
 
-  async findTextInDialog(text) {
-    return within(this.dialog).findByText(toRegex(text))
+async findTextInDialog(text) {
+  const normalize = (s) => (s ?? '').replace(/\s+/g, ' ').trim()
+
+  const firstChunk = text.split(/\s+/).slice(0, 6).join(' ')
+  const re = new RegExp(firstChunk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
+
+  const byParagraph = (_content, node) => {
+    const isP = node?.tagName?.toLowerCase() === 'p'
+    if (!isP) return false
+
+    const full = normalize(node.textContent)
+    return re.test(full)
+  }
+
+  const matches = await within(this.dialog).findAllByText(byParagraph)
+  return matches.at(-1)
   }
 
   async clickButtonByText(text) {
