@@ -48,11 +48,11 @@ export default class ChatWidgetPage {
     const re = new RegExp(firstChunk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
 
     const byParagraph = (_content, node) => {
-        const isP = node?.tagName?.toLowerCase() === 'p'
-        if (!isP) return false
+      const isP = node?.tagName?.toLowerCase() === 'p'
+      if (!isP) return false
 
-        const full = normalize(node.textContent)
-        return re.test(full)
+      const full = normalize(node.textContent)
+      return re.test(full)
     }
 
     const matches = await within(this.dialog).findAllByText(byParagraph)
