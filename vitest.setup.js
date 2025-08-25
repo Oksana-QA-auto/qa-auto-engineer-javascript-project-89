@@ -1,21 +1,19 @@
 /**
- * Тестовая среда jsdom (которая используется Vitest) не реализует
- * Element.prototype.scrollIntoView. Виджет вызывает его на каждом сообщении,
- * из-за чего без заглушки тесты падают с ошибкой:
- *   "t.current.scrollIntoView is not a function".
- *
- * Добавлен минимальный полифилл-заглушка (no-op), чтобы сохранить API
- * и не тестировать сам скролл в юнит-тестах.
- **/
-import '@testing-library/jest-dom/vitest'
-import { vi } from 'vitest'
+ * Тестовая среда jsdom (Vitest) не реализует scrollIntoView/scrollTo.
+ * Подключаем jest-dom и добавляем небольшие полифиллы.
+ */
+
+import { expect, vi } from 'vitest'
+import * as matchers from '@testing-library/jest-dom/matchers'
+
+expect.extend(matchers)
 
 vi.mock('@hexlet/chatbot-v2/dist/init.css', () => ({}), { virtual: true })
 vi.mock('@hexlet/chatbot-v2/styles', () => ({}), { virtual: true })
 
 if (!('scrollIntoView' in Element.prototype)) {
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
-    value: function scrollIntoView() {},
+    value() {},
     writable: true,
     configurable: true,
   })
@@ -23,8 +21,9 @@ if (!('scrollIntoView' in Element.prototype)) {
 
 if (typeof window.scrollTo !== 'function') {
   Object.defineProperty(window, 'scrollTo', {
-    value: () => {},
+    value() {},
     writable: true,
     configurable: true,
   })
 }
+
