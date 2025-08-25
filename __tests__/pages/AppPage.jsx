@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import App from '../../src/App.jsx'
 import ChatWidgetPage from './ChatWidgetPage.js'
 
