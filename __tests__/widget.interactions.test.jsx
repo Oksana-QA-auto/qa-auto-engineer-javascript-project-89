@@ -32,7 +32,7 @@ describe('Widget interactions', () => {
     await page.clickButtonByText(firstButtonText)
 
     const nextId = fixtureSteps[0].buttons[0].nextStepId
-    const nextStep = fixtureSteps.find((s) => s.id === nextId)
+    const nextStep = fixtureSteps.find(s => s.id === nextId)
     const nextMessage = nextStep.messages[0]
 
     expect(await page.findTextInDialog(nextMessage)).toBeInTheDocument()
