@@ -7,9 +7,9 @@ dev:      ; npm run dev
 build:    ; npm run build
 preview:  ; npm run preview
 
-test:     ; ./node_modules/.bin/vitest run --reporter=json --silent --threads=false
+test:     ; ./node_modules/.bin/vitest run --reporter=json --silent | tee /var/tmp/report.json
 
-test-ci:  ; ./node_modules/.bin/vitest run --reporter=json --silent --threads=false
+test-ci:  ; ./node_modules/.bin/vitest run --reporter=json --silent
 
 test-local: ; vitest run --reporter=verbose
 
