@@ -7,11 +7,11 @@ dev:      ; npm run dev
 build:    ; npm run build
 preview:  ; npm run preview
 
-test:     ; npm run --silent test:ci 2>/dev/null | tee /var/tmp/report.json
+test:     ; mkdir -p /var/tmp; ./node_modules/.bin/vitest run --reporter=json --silent > /var/tmp/hexlet.json
 
-test-ci:  ; npm run --silent test:ci 2>/dev/null
+test-ci:  ; mkdir -p /var/tmp; ./node_modules/.bin/vitest run --reporter=json --silent > /var/tmp/hexlet.json
 
-test-local: ; npm test
+test-local: ; vitest run --reporter=verbose
 
 test-cov: ; npm test -- --coverage
 
