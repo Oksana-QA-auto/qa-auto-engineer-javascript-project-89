@@ -1,4 +1,10 @@
+```md
 # React + Vite
+
+[![Tests](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/tests.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/tests.yml)
+[![SonarQube](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/sonar.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/sonar.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Oksana-QA-auto_qa-auto-engineer-javascript-project-89&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Oksana-QA-auto_qa-auto-engineer-javascript-project-89)
+[![hexlet-check](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/hexlet-check.yml)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -32,24 +38,26 @@ If you are developing a production application, we recommend using TypeScript wi
 ```bash
 npm ci
 
-# локальная разработка
+Локальная разработка:
+
 npm run dev
 
-# сборка и предпросмотр
+Сборка и предпросмотр:
+
 npm run build
+
 npm run preview
 
-# тесты
-npm test              # watch-режим
-npm test -- --run     # одиночный прогон (для CI)
+Тесты:
+
+npm test
+
+npm test -- --run
+
 npm test -- --coverage
 
-# линтер
+Линтер:
+
 npm run lint
 
-[![Tests](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/tests.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/tests.yml)
-[![SonarQube](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/sonar.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/sonar.yml)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Oksana-QA-auto_qa-auto-engineer-javascript-project-89&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Oksana-QA-auto_qa-auto-engineer-javascript-project-89)
-[![hexlet-check](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Oksana-QA-auto/qa-auto-engineer-javascript-project-89/actions/workflows/hexlet-check.yml)
-
-
+---

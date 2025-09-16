@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { expect } from 'vitest'
 import Widget from '@hexlet/chatbot-v2'
 import { toRegex } from '../helpers/test-utils.js'
 
@@ -19,10 +20,10 @@ export default class ChatWidgetPage {
   }
 
   async close() {
-    const closeBtn = (
-      within(this.dialog).queryByRole('button', { name: /закрыть/i })
-      ?? within(this.dialog).getByRole('button', { name: /x|close/i })
-    )
+    const closeBtn =
+      within(this.dialog).queryByRole('button', { name: /закрыть/i }) ??
+      within(this.dialog).getByRole('button', { name: /x|close/i })
+
     await this.user.click(closeBtn)
   }
 
@@ -41,22 +42,15 @@ export default class ChatWidgetPage {
     return document.body.querySelector('[role="dialog"]')
   }
 
-  async findTextInDialog(text) {
-    const normalize = s => (s ?? '').replace(/\s+/g, ' ').trim()
+  getAllButtonsInDialog() {
+    return within(this.dialog).getAllByRole('button')
+  }
 
-    const firstChunk = text.split(/\s+/).slice(0, 6).join(' ')
-    const re = new RegExp(firstChunk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
-
-    const byParagraph = (_content, node) => {
-      const isP = node?.tagName?.toLowerCase() === 'p'
-      if (!isP) return false
-
-      const full = normalize(node.textContent)
-      return re.test(full)
-    }
-
-    const matches = await within(this.dialog).findAllByText(byParagraph)
-    return matches.at(-1)
+  getCloseButton() {
+    return (
+      within(this.dialog).queryByRole('button', { name: /закрыть/i }) ??
+      within(this.dialog).getByRole('button', { name: /x|close/i })
+    )
   }
 
   async clickButtonByText(text) {
@@ -64,14 +58,36 @@ export default class ChatWidgetPage {
     await this.user.click(btn)
   }
 
-  getAllButtonsInDialog() {
-    return within(this.dialog).getAllByRole('button')
+  async clickStartButton() {
+    const firstButtonText = this.steps[0].buttons[0].text
+    await this.clickButtonByText(firstButtonText)
   }
 
-  getCloseButton() {
-    return (
-      within(this.dialog).queryByRole('button', { name: /закрыть/i })
-      ?? within(this.dialog).getByRole('button', { name: /x|close/i })
-    )
+  expectOptionsVisible(stepIndex = 0) {
+    const labels = this.steps[stepIndex].buttons.map((b) => b.text)
+    for (const label of labels) {
+      expect(
+        within(this.dialog).getByRole('button', { name: toRegex(label) })
+      ).toBeInTheDocument()
+    }
+  }
+
+  async findTextInDialog(messageOrString) {
+    const text =
+      typeof messageOrString === 'string' ? messageOrString : messageOrString?.text ?? ''
+
+    const normalizeText = (s) => (s ?? '').replace(/\s+/g, ' ').trim()
+
+    const firstChunk = text.split(/\s+/).slice(0, 6).join(' ')
+    const paragraphRegexp = new RegExp(firstChunk.replace(/[.+?^${}()|[\]\\]/g, '\\$&'), 'i')
+
+    const byContent = (_content, node) => {
+      const fullText = normalizeText(node.textContent)
+      return paragraphRegexp.test(fullText)
+    }
+
+    const matches = await within(this.dialog).findAllByText(byContent)
+    return matches.at(-1)
   }
 }
+
