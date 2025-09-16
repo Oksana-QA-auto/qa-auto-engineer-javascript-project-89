@@ -1,20 +1,9 @@
-.PHONY: setup install dev build preview test test-local test-ci test-cov lint clean
+# Makefile
 
-setup:    ; npm ci
-install:  ; npm ci
+lint:
+	npm run lint
 
-dev:      ; npm run dev
-build:    ; npm run build
-preview:  ; npm run preview
+test:
+	npm test
 
-test:     ; mkdir -p /var/tmp; ./node_modules/.bin/vitest run --reporter=json --silent > /var/tmp/hexlet.json
-
-test-ci:  ; mkdir -p /var/tmp; ./node_modules/.bin/vitest run --reporter=json --silent > /var/tmp/hexlet.json
-
-test-local: ; vitest run --reporter=verbose
-
-test-cov: ; npm test -- --coverage
-
-lint:     ; npm run lint
-clean:    ; rm -rf node_modules dist coverage .vitest tmp
 
