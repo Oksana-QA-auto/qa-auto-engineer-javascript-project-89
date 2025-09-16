@@ -7,12 +7,14 @@ dev:      ; npm run dev
 build:    ; npm run build
 preview:  ; npm run preview
 
-test:     ; ./node_modules/.bin/vitest run --reporter=json --silent | tee /var/tmp/hexlet.json
+test:     ; bash scripts/ci-test.sh
 
 test-local: ; vitest run --reporter=verbose
-test-ci:  ; ./node_modules/.bin/vitest run --reporter=json --silent
+
+test-ci:  ; bash scripts/ci-test.sh
 
 test-cov: ; npm test -- --coverage
 lint:     ; npm run lint
 clean:    ; rm -rf node_modules dist coverage .vitest tmp
+
 
