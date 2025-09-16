@@ -8,8 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run --reporter=verbose",
-    "test:ci": "vitest run --reporter=json --silent",
+    "test": "vitest run --reporter=json --silent",
+    "test:local": "vitest run --reporter=verbose",
+    "test:watch": "vitest --reporter=verbose",
     "coverage": "vitest --coverage"
   },
   "dependencies": {
