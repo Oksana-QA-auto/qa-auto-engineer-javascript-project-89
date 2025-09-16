@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run --reporter=verbose",
-    "test:ci": "vitest run --reporter=json",
+    "test:ci": "vitest run --reporter=json --silent --threads=false",
     "coverage": "vitest --coverage"
   },
   "dependencies": {
