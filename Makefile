@@ -7,8 +7,9 @@ dev:      ; npm run dev
 build:    ; npm run build
 preview:  ; npm run preview
 
-test:     ; npm test
-test-ci: ; npx vitest run --reporter=default --reporter=json --outputFile=/var/tmp/hexlet.json
+test:     ; npm run test:ci | tee /var/tmp/hexlet.json
+test-local: ; npm test
+test-ci:  ; npm run test:ci | tee /var/tmp/hexlet.json
 test-cov: ; npm test -- --coverage
 
 lint:     ; npm run lint
