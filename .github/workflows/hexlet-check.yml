@@ -18,17 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-            node-version: '20'
-            cache: 'npm'
-      - name: Install
-        run: make install
-      - name: Test (debug)
-        run: make test
-
       - name: Hexlet project check
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
           verbose: true
+          mount-path: /var/tmp
