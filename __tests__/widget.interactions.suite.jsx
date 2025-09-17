@@ -3,6 +3,7 @@ import fixtureSteps from '../__fixtures__/basic-steps.js'
 import { toRegex } from './helpers/test-utils.js'
 import AppPage from './pages/AppPage.jsx'
 import { within, screen } from '@testing-library/react'
+import './test.mocks.js'
 
 beforeEach(() => {
   window.HTMLElement.prototype.scrollIntoView = vi.fn()

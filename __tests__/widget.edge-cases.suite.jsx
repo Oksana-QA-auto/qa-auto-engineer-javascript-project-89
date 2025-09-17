@@ -1,6 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import { within } from '@testing-library/react'
 import fixtureSteps from '../__fixtures__/basic-steps.js'
+import './test.mocks.js'
 
 import ChatWidgetPage from './pages/ChatWidgetPage.js'
 import { deepClone, assertArray, toRegex } from './helpers/test-utils.js'
