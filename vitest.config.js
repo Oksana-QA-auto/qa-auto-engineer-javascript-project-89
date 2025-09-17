@@ -1,23 +1,17 @@
 import { defineConfig } from 'vitest/config'
-import reactPlugin from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import jestDomMatchers from '@testing-library/jest-dom/matchers'
-import { expect } from 'vitest'
-expect.extend(jestDomMatchers)
-
-const configFileDirectory = path.dirname(fileURLToPath(import.meta.url))
-
-const resolveFromConfigDirectory = (relativePath) =>
-  path.resolve(configFileDirectory, relativePath)
+const configDirectory = path.dirname(fileURLToPath(import.meta.url))
+const resolveFromConfig = (relativePath) => path.resolve(configDirectory, relativePath)
 
 export default defineConfig({
-  plugins: [reactPlugin()],
+  plugins: [react()],
   resolve: {
     alias: {
-      '@hexlet/chatbot-v2/dist/init.css': resolveFromConfigDirectory('__tests__/empty-css.js'),
-      '@hexlet/chatbot-v2/styles': resolveFromConfigDirectory('__tests__/empty-css.js'),
+      '@hexlet/chatbot-v2/dist/init.css': resolveFromConfig('__tests__/empty-css.js'),
+      '@hexlet/chatbot-v2/styles': resolveFromConfig('__tests__/empty-css.js'),
     },
   },
   ssr: {
@@ -28,7 +22,11 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    setupFiles: [resolveFromConfigDirectory('vitest.setup.js')],
+    setupFiles: [
+      resolveFromConfig('vitest.setup.js'),
+      resolveFromConfig('__tests__/setup-expect.js'),
+    ],
     globals: true,
   },
 })
+
