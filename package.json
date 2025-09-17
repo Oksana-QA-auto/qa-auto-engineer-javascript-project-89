@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node scripts/vitest-to-file.cjs",
+    "test": "vitest run --reporter=verbose",
     "test:local": "vitest run --reporter=verbose",
     "test:watch": "vitest --reporter=verbose",
     "coverage": "vitest --coverage"
