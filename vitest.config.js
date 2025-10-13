@@ -14,7 +14,7 @@ export default defineConfig({
 
   test: {
     environment: 'jsdom',
-    setupFiles: ['vitest.setup.js'],
+    setupFiles: ['__tests__/setup-expect.js'],
     globals: true,
 
     include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.suite.{js,jsx,ts,tsx}'],
