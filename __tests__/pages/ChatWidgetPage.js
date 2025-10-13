@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
@@ -12,7 +13,7 @@ export default class ChatWidgetPage {
   }
 
   async open() {
-    render(Widget(this.steps))
+    render(React.createElement(Widget, { steps: this.steps }))
     const openBtn = await screen.findByRole('button', { name: /открыть чат/i })
     await this.user.click(openBtn)
     this.dialog = await screen.findByRole('dialog')

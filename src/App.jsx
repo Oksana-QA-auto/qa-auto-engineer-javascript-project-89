@@ -1,43 +1,42 @@
 import { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
-import steps from './steps.js'
+import steps from '../__fixtures__/basic-steps.js'
 
 const App = () => {
   const [form, setForm] = useState({
-    email: '',
-    password: '',
-    city: '',
-    country: '',
-    address: '',
+    email: "",
+    password: "",
+    city: "",
+    country: "",
+    address: "",
     acceptRules: false,
   })
-
-  const [submittingState, setSubmittingState] = useState('fillingForm')
+  const [submittingState, setSubmittingState] = useState("fillingForm")
 
   const handleChangeField = ({ target }) => {
-    const value = target.type === 'checkbox' ? target.checked : target.value
+    const value = target.type === "checkbox" ? target.checked : target.value
     setForm({ ...form, [target.name]: value })
   }
 
   const handleBackToForm = () => {
-    setSubmittingState('fillingForm')
+    setSubmittingState("fillingForm")
   }
 
-  const handleSubmitForm = (event) => {
-    event.preventDefault()
-    setSubmittingState('submitted')
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    setSubmittingState("submitted")
   }
 
   const enToRus = {
-    email: 'Email',
-    password: 'Пароль',
-    city: 'Город',
-    country: 'Страна',
-    address: 'Адрес',
-    acceptRules: 'Принять правила',
+    email: "Email",
+    password: "Пароль",
+    city: "Город",
+    country: "Страна",
+    address: "Адрес",
+    acceptRules: "Принять правила",
   }
 
-  const renderRow = key => (
+  const renderRow = (key) => (
     <tr key={key}>
       <td>{enToRus[key]}</td>
       <td>{form[key].toString()}</td>
@@ -48,10 +47,13 @@ const App = () => {
     const keys = Object.keys(form).sort()
     return (
       <div className="m-3">
-        <button type="button" className="btn btn-primary" onClick={handleBackToForm}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleBackToForm}
+        >
           Назад
         </button>
-
         <table className="table">
           <tbody>{keys.map(renderRow)}</tbody>
         </table>
@@ -62,7 +64,9 @@ const App = () => {
   const renderForm = () => (
     <form className="m-3" onSubmit={handleSubmitForm} name="myForm">
       <div className="col-md-6 mb-3">
-        <label htmlFor="email" className="col-form-label">Email</label>
+        <label htmlFor="email" className="col-form-label">
+          Email
+        </label>
         <input
           autoComplete="on"
           type="email"
@@ -74,9 +78,10 @@ const App = () => {
           placeholder="Email"
         />
       </div>
-
       <div className="col-md-6 mb-3">
-        <label htmlFor="password" className="col-form-label">Пароль</label>
+        <label htmlFor="password" className="col-form-label">
+          Пароль
+        </label>
         <input
           autoComplete="on"
           type="password"
@@ -88,9 +93,10 @@ const App = () => {
           placeholder="Пароль"
         />
       </div>
-
       <div className="col-md-6 mb-3">
-        <label htmlFor="address" className="col-form-label">Адрес</label>
+        <label htmlFor="address" className="col-form-label">
+          Адрес
+        </label>
         <textarea
           type="text"
           name="address"
@@ -101,9 +107,10 @@ const App = () => {
           placeholder="Невский проспект, 12"
         />
       </div>
-
       <div className="col-md-6 mb-3">
-        <label htmlFor="city" className="col-form-label">Город</label>
+        <label htmlFor="city" className="col-form-label">
+          Город
+        </label>
         <input
           autoComplete="on"
           type="text"
@@ -114,9 +121,10 @@ const App = () => {
           id="city"
         />
       </div>
-
       <div className="col-md-6 mb-3">
-        <label htmlFor="country" className="col-form-label">Страна</label>
+        <label htmlFor="country" className="col-form-label">
+          Страна
+        </label>
         <select
           id="country"
           name="country"
@@ -130,11 +138,9 @@ const App = () => {
           <option value="Китай">Китай</option>
         </select>
       </div>
-
       <div className="col-md-6 mb-3">
         <div className="form-check">
           <label className="form-check-label" htmlFor="rules">
-            Принять правила
             <input
               autoComplete="on"
               id="rules"
@@ -144,17 +150,19 @@ const App = () => {
               type="checkbox"
               checked={form.acceptRules}
             />
+            Принять правила
           </label>
         </div>
       </div>
-
-      <button type="submit" className="btn btn-primary">Зарегистрироваться</button>
+      <button type="submit" className="btn btn-primary">
+        Зарегистрироваться
+      </button>
     </form>
   )
 
   return (
     <>
-      {submittingState === 'fillingForm' ? renderForm() : renderResult()}
+      {submittingState === "fillingForm" ? renderForm() : renderResult()}
       {Widget(steps)}
     </>
   )

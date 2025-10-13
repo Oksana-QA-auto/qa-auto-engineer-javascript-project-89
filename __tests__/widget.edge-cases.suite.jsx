@@ -1,79 +1,74 @@
-import { describe, test, expect } from 'vitest'
-import { within } from '@testing-library/react'
-import fixtureSteps from '../__fixtures__/basic-steps.js'
-import './test.mocks.js'
+import './mocks/integration.mocks.jsx'
 
-import ChatWidgetPage from './pages/ChatWidgetPage.js'
-import { deepClone, assertArray, toRegex } from './helpers/test-utils.js'
+import { describe, test, expect, beforeEach, afterEach } from 'vitest'
+import { screen, within } from '@testing-library/react'
+import AppPage from './pages/AppPage.jsx'
+import steps from '../__fixtures__/basic-steps.js'
 
-describe('Widget edge cases', () => {
-  test('handles missing nextStepId gracefully (no crash, content stays the same)', async () => {
-    const steps = deepClone(fixtureSteps)
-    assertArray(steps, 'fixtureSteps clone')
+beforeEach(() => {
+  window.HTMLElement.prototype.scrollIntoView = vi.fn()
+})
+afterEach(() => {
+  vi.clearAllMocks()
+})
 
-    steps[0].buttons[0].nextStepId = undefined
+describe('Widget edge-cases', () => {
+  test('форма: некорректные данные не ломают интерфейс, сводка отображается как есть', async () => {
+    const page = new AppPage(steps)
+    page.renderApp()
 
-    const page = new ChatWidgetPage(steps)
-    await page.open()
+    const bad = {
+      email: 'user@test.io',
+      password: '123',
+      address: '',
+      city: '',
+      country: 'Россия',
+      acceptRules: false,
+    }
 
-    const firstMessage = steps[0].messages[0]
-    const firstButtonText = steps[0].buttons[0].text
+    await page.fillFormAndSubmit(bad)
 
-    await page.clickButtonByText(firstButtonText)
-    expect(await within(page.dialog).findByText(toRegex(firstMessage))).toBeInTheDocument()
+    const table = await screen.findByRole('table')
+    const tableQueries = within(table)
+
+    expect(tableQueries.getByText('Email')).toBeInTheDocument()
+    expect(tableQueries.getByText(bad.email)).toBeInTheDocument()
+
+    expect(tableQueries.getByText('Пароль')).toBeInTheDocument()
+    expect(tableQueries.getByText(bad.password)).toBeInTheDocument()
+
+    const addressRow = tableQueries.getByText('Адрес').closest('tr')
+    expect(within(addressRow).getAllByRole('cell')[1].textContent).toBe('')
+
+    const cityRow = tableQueries.getByText('Город').closest('tr')
+    expect(within(cityRow).getAllByRole('cell')[1].textContent).toBe('')
+
+    expect(tableQueries.getByText('Страна')).toBeInTheDocument()
+    expect(tableQueries.getByText(bad.country)).toBeInTheDocument()
+
+    expect(tableQueries.getByText('Принять правила')).toBeInTheDocument()
+    expect(tableQueries.getByText('false')).toBeInTheDocument()
+
+    await page.backToForm()
+    expect(page.submitBtn()).toBeInTheDocument()
   })
 
-  test('renders step without buttons (only messages and close control are present)', async () => {
-    const steps = deepClone(fixtureSteps)
-    assertArray(steps, 'fixtureSteps clone')
+  test('виджет: быстрые циклы открытия/закрытия не ломают интерфейс, фокус возвращается на кнопку', async () => {
+    const page = new AppPage(steps)
 
-    steps.push({
-      id: 'plain',
-      messages: ['Это простой шаг без кнопок.'],
-      buttons: [],
-    })
-    steps[0].buttons[0].nextStepId = 'plain'
-
-    const page = new ChatWidgetPage(steps)
     await page.open()
-
-    const firstButtonText = steps[0].buttons[0].text
-    await page.clickButtonByText(firstButtonText)
-
-    expect(await within(page.dialog).findByText(/простой шаг без кнопок/i)).toBeInTheDocument()
-    expect(page.getAllButtonsInDialog()).toHaveLength(1)
-    expect(page.getCloseButton()).toBeInTheDocument()
-  })
-
-  test('escapes HTML in messages (no tags are injected)', async () => {
-    const steps = deepClone(fixtureSteps)
-    assertArray(steps, 'fixtureSteps clone')
-
-    const htmlLike = '<b>никакого HTML тут быть не должно</b>'
-    steps[0].messages.unshift(htmlLike)
-
-    const page = new ChatWidgetPage(steps)
-    await page.open()
-
-    expect(await within(page.dialog).findByText(toRegex(htmlLike))).toBeInTheDocument()
-    expect(within(page.dialog).queryByText((_, node) => node?.tagName === 'B')).toBeNull()
-  })
-
-  test('state resets after close & reopen (returns to the first step)', async () => {
-    const steps = deepClone(fixtureSteps)
-    assertArray(steps, 'fixtureSteps clone')
-
-    const page = new ChatWidgetPage(steps)
-    await page.open()
-
-    const firstMessage = steps[0].messages[0]
-    const firstButtonText = steps[0].buttons[0].text
-
-    await page.clickButtonByText(firstButtonText)
-
+    expect(await within(page.dialog).findByRole('heading', { name: /привет/i }))
+      .toBeInTheDocument()
     await page.close()
-    await page.reopen()
+    expect(page.openButton()).toHaveFocus()
 
-    expect(await within(page.dialog).findByText(toRegex(firstMessage))).toBeInTheDocument()
+    await page.openCloseRapidly(2)
+
+    await page.reopen()
+    expect(await within(page.dialog).findByRole('heading', { name: /привет/i }))
+      .toBeInTheDocument()
+    await page.close()
+    expect(page.queryDialog()).not.toBeInTheDocument()
+    expect(page.openButton()).toHaveFocus()
   })
 })
