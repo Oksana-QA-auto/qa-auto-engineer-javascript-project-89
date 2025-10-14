@@ -1,8 +1,10 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
 
-const setupFile = fileURLToPath(new URL('./__tests__/setup-expect.js', import.meta.url))
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default defineConfig({
   plugins: [react()],
@@ -17,8 +19,8 @@ export default defineConfig({
 
   test: {
     environment: 'jsdom',
-    setupFiles: [setupFile],
     globals: true,
+    setupFiles: [resolve(__dirname, '__tests__/setup-expect.js')],
 
     include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.suite.{js,jsx,ts,tsx}'],
     exclude: ['node_modules/**', 'dist/**'],
