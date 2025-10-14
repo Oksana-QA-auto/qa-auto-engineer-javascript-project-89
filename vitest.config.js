@@ -20,16 +20,20 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: [resolve(__dirname, '__tests__/setup-expect.js')],
 
-    include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.suite.{js,jsx,ts,tsx}'],
+    setupFiles: [
+      resolve(__dirname, 'vitest.setup.js'),
+      resolve(__dirname, '__tests__/setup-expect.js'),
+    ],
+
+    include: ['**/*.{test,spec}.{c,m,mt,jt,js,jsx,ts,tsx}', '**/*.suite.{js,jsx,ts,tsx}'],
     exclude: ['node_modules/**', 'dist/**'],
 
     onConsoleLog(type, message) {
       if (
         (type === 'warn' || type === 'error') &&
-        /Invalid hook call|ReactDOM\.render is no longer supported|JSDOM|Warning:/.test(
-          String(message)
+        /Invalid hook call|ReactDOM\.render is no longer supported|JSDOM|Warning:/i.test(
+          String(message),
         )
       ) {
         return false
