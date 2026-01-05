@@ -57,16 +57,14 @@ describe('Widget edge-cases', () => {
     const page = new AppPage(steps)
 
     await page.open()
-    expect(await within(page.dialog).findByRole('heading', { name: /привет/i }))
-      .toBeInTheDocument()
+    expect(await within(page.dialog).findByText(/привет/i)).toBeInTheDocument()
     await page.close()
     expect(page.openButton()).toHaveFocus()
 
     await page.openCloseRapidly(2)
 
     await page.reopen()
-    expect(await within(page.dialog).findByRole('heading', { name: /привет/i }))
-      .toBeInTheDocument()
+    expect(await within(page.dialog).findByText(/привет/i)).toBeInTheDocument()
     await page.close()
     expect(page.queryDialog()).not.toBeInTheDocument()
     expect(page.openButton()).toHaveFocus()

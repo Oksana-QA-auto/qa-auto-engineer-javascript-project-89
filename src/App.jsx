@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
-import steps from '../__fixtures__/basic-steps.js'
+import stepsRaw from '../__fixtures__/basic-steps.js'
+import '@hexlet/chatbot-v2/styles'
+
+const steps = Array.isArray(stepsRaw) ? stepsRaw : []
 
 const App = () => {
   const [form, setForm] = useState({
@@ -160,10 +163,18 @@ const App = () => {
     </form>
   )
 
+const safeSteps = Array.isArray(steps)
+  ? steps.map((s) => ({
+      ...s,
+      messages: Array.isArray(s.messages) ? [...s.messages] : [],
+      buttons: Array.isArray(s.buttons) ? [...s.buttons] : [],
+    }))
+  : []
+
   return (
     <>
-      {submittingState === "fillingForm" ? renderForm() : renderResult()}
-      {Widget(steps)}
+      {submittingState === 'fillingForm' ? renderForm() : renderResult()}
+      {Widget(safeSteps)}
     </>
   )
 }

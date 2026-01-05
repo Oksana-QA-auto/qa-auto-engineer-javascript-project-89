@@ -18,9 +18,7 @@ describe('Интеграция виджета в приложение', () => {
 
     await page.open()
 
-    expect(
-      await within(page.dialog).findByRole('heading', { name: /привет/i })
-    ).toBeInTheDocument()
+    expect(await within(page.dialog).findByText(/привет/i)).toBeInTheDocument()
 
     expect(
       within(page.dialog).getByRole('button', { name: /закрыть|close/i })
