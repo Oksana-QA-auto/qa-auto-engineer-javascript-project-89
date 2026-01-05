@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
 import stepsRaw from '../__fixtures__/basic-steps.js'
-import '@hexlet/chatbot-v2/styles'
 
 const steps = Array.isArray(stepsRaw) ? stepsRaw : []
 
