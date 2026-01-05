@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom/vitest'
 import './widget.smoke.suite.jsx'
 import './widget.edge-cases.suite.jsx'
 import './widget.render.suite.jsx'
