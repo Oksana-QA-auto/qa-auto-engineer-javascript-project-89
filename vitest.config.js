@@ -33,7 +33,6 @@ resolve: {
 
     setupFiles: [
       resolve(__dirname, 'vitest.setup.js'),
-      resolve(__dirname, '__tests__/setup-expect.js'),
     ],
 
     include: ['**/*.{test,spec}.{c,m,mt,jt,js,jsx,ts,tsx}'],
