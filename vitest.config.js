@@ -1,17 +1,21 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'node:path'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const SUPPRESS = process.env.IMPLEMENTATION_NAME === 'right'
 
 export default defineConfig({
   plugins: [react()],
 
-resolve: {
+  resolve: {
     dedupe: ['react', 'react-dom'],
     alias: {
-      react: resolve(process.cwd(), 'node_modules/react'),
-      'react-dom': resolve(process.cwd(), 'node_modules/react-dom'),
+      react: resolve(__dirname, 'node_modules/react'),
+      'react-dom': resolve(__dirname, 'node_modules/react-dom'),
     },
   },
 
@@ -27,7 +31,7 @@ resolve: {
     environment: 'jsdom',
     globals: true,
 
-    setupFiles: ['./vitest.setup.js'],
+    setupFiles: [resolve(__dirname, 'vitest.setup.js')],
 
     include: ['**/*.{test,spec}.{c,m,mt,jt,js,jsx,ts,tsx}'],
     exclude: ['node_modules/**', 'dist/**'],
@@ -40,3 +44,4 @@ resolve: {
     },
   },
 })
+
