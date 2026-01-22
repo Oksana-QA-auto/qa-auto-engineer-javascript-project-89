@@ -3,6 +3,11 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 
+import matchers from '@testing-library/jest-dom/matchers'
+import { expect } from 'vitest'
+
+expect.extend(matchers)
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
