@@ -3,11 +3,6 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 
-import matchers from '@testing-library/jest-dom/matchers'
-import { expect } from 'vitest'
-
-expect.extend(matchers)
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -36,9 +31,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
 
-    setupFiles: [resolve(__dirname, 'vitest.setup.js')],
+    setupFiles: ['./vitest.setup.js'],
 
-    include: ['**/*.{test,spec}.{c,m,mt,jt,js,jsx,ts,tsx}'],
+    include: ['**/*.{test,spec}.{c,m,mt,js,jsx,ts,tsx}'],
     exclude: ['node_modules/**', 'dist/**'],
 
     onConsoleLog(type, message) {
@@ -49,4 +44,3 @@ export default defineConfig({
     },
   },
 })
-
