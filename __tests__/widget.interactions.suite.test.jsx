@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import './mocks/integration.mocks.jsx'
 import { describe, test, expect, beforeEach, afterEach } from 'vitest'
 import AppPage from './pages/AppPage.jsx'

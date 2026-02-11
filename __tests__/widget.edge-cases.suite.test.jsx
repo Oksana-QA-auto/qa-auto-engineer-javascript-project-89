@@ -1,5 +1,5 @@
 import './mocks/integration.mocks.jsx'
-
+import { vi } from 'vitest'
 import { describe, test, expect, beforeEach, afterEach } from 'vitest'
 import { screen, within } from '@testing-library/react'
 import AppPage from './pages/AppPage.jsx'

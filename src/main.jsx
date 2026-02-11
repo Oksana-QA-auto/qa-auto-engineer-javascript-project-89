@@ -1,6 +1,9 @@
-import { createRoot } from 'react-dom/client'
+import App from './App'
+import ReactDOM from 'react-dom/client'
 import Widget from '@hexlet/chatbot-v2'
-import steps from './steps.js'
+import steps from '../__fixtures__/basic-steps.js'
 import '@hexlet/chatbot-v2/styles'
 
-createRoot(document.getElementById('root')).render(Widget(steps))
+const container = document.getElementById('root')
+ReactDOM.createRoot(container).render(Widget(steps))
+  .render(<App/>)

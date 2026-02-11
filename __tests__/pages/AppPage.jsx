@@ -1,6 +1,7 @@
 import { render, screen, within, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from '../../src/App.jsx'
+import { expect } from 'vitest'
 
 export default class AppPage {
   constructor(steps) {
