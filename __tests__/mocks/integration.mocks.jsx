@@ -1,15 +1,19 @@
 import React, { useRef, useState } from 'react'
 import { vi } from 'vitest'
 
+vi.mock('@hexlet/chatbot-v2/styles', () => ({}))
+
 vi.mock('@hexlet/chatbot-v2', () => {
   function WidgetMock({ steps = [] }) {
     const [open, setOpen] = useState(false)
     const openBtnRef = useRef(null)
 
-    const first = steps[0] || {
-      messages: ['Привет!'],
-      buttons: [{ text: 'Далее', nextStepId: null }],
-    }
+    const first = Array.isArray(steps) && steps.length > 0
+      ? steps[0]
+      : { messages: [], buttons: [] }
+
+    const welcome = first?.messages?.[0] ?? ''
+    const firstButtonText = first?.buttons?.[0]?.text ?? 'Начать разговор'
 
     const openDialog = () => setOpen(true)
     const closeDialog = () => {
@@ -17,29 +21,30 @@ vi.mock('@hexlet/chatbot-v2', () => {
       queueMicrotask(() => openBtnRef.current?.focus())
     }
 
-    const stepsCount = Array.isArray(steps) ? steps.length : 0
-
     return (
-      <div data-steps-count={stepsCount}>
+      <div>
         <button
-          ref={openBtnRef}
-          aria-label="open widget"
           type="button"
+          ref={openBtnRef}
           onClick={openDialog}
         >
           Открыть чат
         </button>
 
         {open && (
-          <div role="dialog">
-            <h2>Привет!</h2>
+          <div role="dialog" aria-label="chatbot">
+            <p>{welcome}</p>
 
-            <button aria-label="close" type="button" onClick={closeDialog}>
+            <button
+              type="button"
+              aria-label="close"
+              onClick={closeDialog}
+            >
               Закрыть
             </button>
 
             {first?.buttons?.length ? (
-              <button type="button">{first.buttons[0].text}</button>
+              <button type="button">{firstButtonText}</button>
             ) : null}
           </div>
         )}
@@ -47,5 +52,8 @@ vi.mock('@hexlet/chatbot-v2', () => {
     )
   }
 
-  return { default: WidgetMock }
+  const widget = (steps) => <WidgetMock steps={steps} />
+
+  return { default: widget }
 })
+

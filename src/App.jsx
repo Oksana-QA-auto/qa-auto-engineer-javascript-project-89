@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Widget from '@hexlet/chatbot-v2'
+import '@hexlet/chatbot-v2/styles'
 import steps from '../__fixtures__/basic-steps.js'
 
 const App = () => {
@@ -10,22 +11,22 @@ const App = () => {
     country: "",
     address: "",
     acceptRules: false,
-  });
-  const [submittingState, setSubmittingState] = useState("fillingForm");
+  })
+  const [submittingState, setSubmittingState] = useState("fillingForm")
 
   const handleChangeField = ({ target }) => {
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    setForm({ ...form, [target.name]: value });
-  };
+    const value = target.type === "checkbox" ? target.checked : target.value
+    setForm({ ...form, [target.name]: value })
+  }
 
   const handleBackToForm = () => {
-    setSubmittingState("fillingForm");
-  };
+    setSubmittingState("fillingForm")
+  }
 
   const handleSubmitForm = (e) => {
-    e.preventDefault();
-    setSubmittingState("submitted");
-  };
+    e.preventDefault()
+    setSubmittingState("submitted")
+  }
 
   const enToRus = {
     email: "Email",
@@ -41,7 +42,7 @@ const App = () => {
       <td>{enToRus[key]}</td>
       <td>{form[key].toString()}</td>
     </tr>
-  );
+  )
 
   const renderResult = () => {
     const keys = Object.keys(form).sort();
@@ -58,8 +59,8 @@ const App = () => {
           <tbody>{keys.map(renderRow)}</tbody>
         </table>
       </div>
-    );
-  };
+    )
+  }
 
   const renderForm = () => (
     <form className="m-3" onSubmit={handleSubmitForm} name="myForm">
@@ -158,14 +159,14 @@ const App = () => {
         Зарегистрироваться
       </button>
     </form>
-  );
+  )
 
   return (
     <>
       {submittingState === "fillingForm" ? renderForm() : renderResult()}
       {Widget(steps)}
     </>
-  );
-};
+  )
+}
 
-export default App; 
+export default App
