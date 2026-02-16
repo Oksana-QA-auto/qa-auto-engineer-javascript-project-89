@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { vi } from 'vitest'
 
-vi.mock('@hexlet/chatbot-v2/styles', () => ({}))
-
 vi.mock('@hexlet/chatbot-v2', () => {
   function WidgetMock({ steps = [] }) {
     const [open, setOpen] = useState(false)

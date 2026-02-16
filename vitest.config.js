@@ -4,11 +4,6 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 
-import * as matchers from '@testing-library/jest-dom/matchers'
-import { expect } from 'vitest'
-
-expect.extend(matchers)
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -22,6 +17,9 @@ export default defineConfig({
     alias: {
       react: resolve(__dirname, 'node_modules/react'),
       'react-dom': resolve(__dirname, 'node_modules/react-dom'),
+      '@hexlet/chatbot-v2/styles': resolve(
+      __dirname,
+      'node_modules/@hexlet/chatbot-v2/dist/init.css'),
     },
   },
 
