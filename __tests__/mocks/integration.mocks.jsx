@@ -13,6 +13,8 @@ vi.mock('@hexlet/chatbot-v2', () => {
     const welcome = first?.messages?.[0] ?? ''
     const firstButtonText = first?.buttons?.[0]?.text ?? 'Начать разговор'
 
+    const stepsCount = Array.isArray(steps) ? steps.length : 0
+
     const openDialog = () => setOpen(true)
     const closeDialog = () => {
       setOpen(false)
@@ -20,12 +22,8 @@ vi.mock('@hexlet/chatbot-v2', () => {
     }
 
     return (
-      <div>
-        <button
-          type="button"
-          ref={openBtnRef}
-          onClick={openDialog}
-        >
+      <div data-steps-count={stepsCount}>
+        <button type="button" ref={openBtnRef} onClick={openDialog}>
           Открыть чат
         </button>
 
